@@ -1,9 +1,40 @@
+'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import logo from '@/assets/images/logo.svg';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { FaUser, FaSignInAlt, FaSignOutAlt, FaBuilding } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import logo from '@/assets/images/logo.svg';
+import destroySession from '@/app/actions/destroySession';
+import checkAuth from '@/app/actions/checkAuth';
+import { useAuth } from '@/context/authContext';
 
 const Header = () => {
+  const router = useRouter();
+  // const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
+
+  // useEffect(() => {
+  //   const fetchAuthStatus = async () => {
+  //     const result = await checkAuth();
+  //     setIsAuthenticated(result.isAuthenticated);
+  //   };
+
+  //   fetchAuthStatus();
+  // }, []);
+
+  const handleLogout = async () => {
+    const { success, error } = await destroySession();
+
+    if (success) {
+      setIsAuthenticated(false);
+      router.push('/login');
+    } else {
+      toast.error(error);
+    }
+  };
+
   return (
     <header className="bg-gray-100">
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -26,18 +57,22 @@ const Header = () => {
                   Rooms
                 </Link>
                 {/* <!-- Logged In Only --> */}
-                <Link
-                  href="/bookings.html"
-                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
-                >
-                  Bookings
-                </Link>
-                <Link
-                  href="/add-room.html"
-                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
-                >
-                  Add Room
-                </Link>
+                {isAuthenticated && (
+                  <>
+                    <Link
+                      href="/bookings"
+                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
+                    >
+                      Bookings
+                    </Link>
+                    <Link
+                      href="/rooms/add"
+                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
+                    >
+                      Add Room
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -45,27 +80,39 @@ const Header = () => {
           <div className="ml-auto">
             <div className="ml-4 flex items-center md:ml-6">
               {/* <!-- Logged Out Only --> */}
-              <Link
-                href="login.html"
-                className="mr-3 text-gray-800 hover:text-gray-600"
-              >
-                <FaSignInAlt className="inline mr-1" /> Login
-              </Link>
-              <Link
-                href="register.html"
-                className="mr-3 text-gray-800 hover:text-gray-600"
-              >
-                <FaUser className="inline mr-1" /> Register
-              </Link>
-              <Link href="my-rooms.html">
-                <FaBuilding className="inline mr-1" /> My Rooms
-              </Link>
-              <Link
-                href="login.html"
-                className="mx-3 text-gray-800 hover:text-gray-600"
-              >
-                <FaSignOutAlt className="inline mr-1" /> Sign Out
-              </Link>
+              {!isAuthenticated && (
+                <>
+                  <Link
+                    href="/login"
+                    className="mr-3 text-gray-800 hover:text-gray-500"
+                  >
+                    <FaSignInAlt className="inline mr-1" /> Login
+                  </Link>
+                  <Link
+                    href="/register"
+                    className="mx-3 text-gray-800 hover:text-gray-500"
+                  >
+                    <FaUser className="inline mr-1" /> Register
+                  </Link>
+                </>
+              )}
+
+              {isAuthenticated && (
+                <>
+                  <Link
+                    href="/rooms/my"
+                    className="mx-3 text-gray-800 hover:text-gray-500"
+                  >
+                    <FaBuilding className="inline mr-1" /> My Rooms
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="mx-3 text-gray-800 hover:text-gray-500 cursor-pointer"
+                  >
+                    <FaSignOutAlt className="inline mr-1" /> Sign Out
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -81,18 +128,22 @@ const Header = () => {
             Rooms
           </Link>
           {/* <!-- Logged In Only --> */}
-          <Link
-            href="/bookings.html"
-            className="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
-          >
-            Bookings
-          </Link>
-          <Link
-            href="/add-room.html"
-            className="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
-          >
-            Add Room
-          </Link>
+          {isAuthenticated && (
+            <>
+              <Link
+                href="//bookings"
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
+              >
+                Bookings
+              </Link>
+              <Link
+                href="/rooms/add"
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
+              >
+                Add Room
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>
