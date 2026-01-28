@@ -1,7 +1,5 @@
 'use server';
-
 import { createAdminClient } from '@/config/appwrite';
-import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 async function getSingleRoom(id) {
@@ -15,12 +13,9 @@ async function getSingleRoom(id) {
       id,
     );
 
-    // Revalidate the cache for this path
-    // revalidatePath('/', 'layout');
-
     return room;
   } catch (err) {
-    console.log('Failed to get room', err);
+    console.log('Failed to get room:', err);
     redirect('/error');
   }
 }

@@ -32,7 +32,7 @@ async function createSession(prevState, formData) {
       success: true,
     };
   } catch (err) {
-    console.log('Authentication Error: ', err);
+    console.log('Authentication Error:', err);
     return {
       error: 'Invalid Credentials',
     };
