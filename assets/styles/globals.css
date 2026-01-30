@@ -1,1 +1,30 @@
 @import "tailwindcss";
+
+.rbc-header {
+  cursor: none;
+  pointer-events: none;
+}
+
+.rbc-time-slot {
+  font-size: 12px;
+  text-align: center;
+}
+
+.rbc-event {
+  flex-wrap: nowrap !important;
+  pointer-events: none;
+}
+
+.rbc-event:hover {
+  background-color: inherit;
+}
+
+.rbc-event-label {
+  /* white-space: normal !important; */
+  margin-top: 2px;
+}
+
+.rbc-event-content {
+  margin-top: 2px;
+  font-size: 12px;
+}

@@ -8,18 +8,22 @@ const BookedRoomCard = ({ booking }) => {
     const date = new Date(dateString);
 
     // Get month
-    const options = { month: 'short' };
-    const month = date.toLocaleString('en-US', options, { timeZone: 'UTC' });
+    const month = date.toLocaleString(
+      'en-US',
+      { month: 'short' },
+      // { timeZone: 'UTC' },
+    );
 
     // Get day
-    const day = date.getUTCDate();
+    // const day = date.getUTCDate(); // UTC
+    const day = date.getDate(); // Local time
 
     // Format time in UTC 24-hour
     const timeOptions = {
       hour: 'numeric',
       minute: 'numeric',
       hour12: false,
-      timeZone: 'UTC',
+      // timeZone: 'UTC',
     };
 
     const time = date.toLocaleString('en-US', timeOptions);

@@ -7,6 +7,8 @@ import checkAuth from './checkAuth';
 import { revalidatePath } from 'next/cache';
 import checkRoomAvailability from './checkRoomAvailability';
 
+import { fromZonedTime } from 'date-fns-tz';
+
 async function bookRoom(prevState, formData) {
   const sessionCookie = (await cookies()).get('appwrite-session');
   if (!sessionCookie) {
@@ -32,9 +34,19 @@ async function bookRoom(prevState, formData) {
     const checkOutTime = formData.get('check_out_time');
     const roomId = formData.get('room_id');
 
+    // Convert from local time to UTC
+    const timeZone = 'America/Edmonton';
+
+    function localToUtc(date, time) {
+      const localDateTime = `${date}T${time}:00`;
+      return fromZonedTime(localDateTime, timeZone).toISOString();
+    }
+
     // Combine date and time to ISO 8601 format
-    const checkInDateTime = `${checkInDate}T${checkInTime}`;
-    const checkOutDateTime = `${checkOutDate}T${checkOutTime}`;
+    // const checkInDateTime = `${checkInDate}T${checkInTime}`;
+    // const checkOutDateTime = `${checkOutDate}T${checkOutTime}`;
+    const checkInDateTime = localToUtc(checkInDate, checkInTime);
+    const checkOutDateTime = localToUtc(checkOutDate, checkOutTime);
 
     // Check if room is available
     const isAvailable = await checkRoomAvailability(

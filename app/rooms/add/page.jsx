@@ -163,7 +163,7 @@ const AddRoomPage = () => {
               id="availability"
               name="availability"
               className="border rounded w-full py-2 px-3"
-              placeholder="Availability (Monday - Friday, 9am - 5pm)"
+              placeholder="Availability (Monday - Friday, 9:00 - 17:00)"
               required
             />
           </div>

@@ -5,6 +5,7 @@ import AuthWrapper from '@/components/AuthWrapper';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '@/assets/styles/globals.css';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const inter = Inter({
   subsets: ['latin'],

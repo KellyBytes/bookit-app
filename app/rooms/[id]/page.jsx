@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { FaChevronLeft } from 'react-icons/fa';
 // import rooms from '@/data/rooms.json';
 import getSingleRoom from '@/app/actions/getSingleRoom';
+import ShowBookings from '@/components/ShowBookings';
 
 const RoomPage = async ({ params }) => {
   const { id } = await params;
@@ -71,6 +72,7 @@ const RoomPage = async ({ params }) => {
         </div>
 
         <BookingForm room={room} />
+        <ShowBookings room={room} />
       </div>
     </>
   );

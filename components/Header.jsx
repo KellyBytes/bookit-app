@@ -120,10 +120,10 @@ const Header = () => {
 
       {/* <!-- Mobile menu --> */}
       <div className="md:hidden">
-        <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+        <div className="flex justify-around p-2">
           <Link
             href="/"
-            className="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
+            className="block rounded-md px-8 py-2 text-base font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
           >
             Rooms
           </Link>
@@ -132,13 +132,13 @@ const Header = () => {
             <>
               <Link
                 href="/bookings"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
+                className="block rounded-md px-8 py-2 text-base font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
               >
                 Bookings
               </Link>
               <Link
                 href="/rooms/add"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
+                className="block rounded-md px-8 py-2 text-base font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
               >
                 Add Room
               </Link>
